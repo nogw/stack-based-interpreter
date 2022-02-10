@@ -6,7 +6,7 @@ errorMsgSmallStack :: String -> String
 errorMsgSmallStack msg = msg ++ ": stack needs a minimum of two values"
 
 errorEmptyStack :: String -> String
-errorEmptyStack msg = msg ++ ": stack needs to have at least one item to perform this operation"
+errorEmptyStack msg = msg ++ ": stack needs to have at least one value to perform this operation"
 
 data Operation = Add | Minus | Divide | Multiply deriving (Show)
 
@@ -20,8 +20,8 @@ data StackInstructs
   | Dup
   | Swap
   | Drop
-  | Over
   | Rot
+  | Over
   deriving (Show)
 
 stackTest :: [StackInstructs]
@@ -71,6 +71,13 @@ evaluate stack = aux stack []
         ( case acc of
             _ : rest' -> rest'
             _ -> error (errorMsgSmallStack "Swap")
+        )
+    aux (Rot : rest) acc =
+      aux
+        rest
+        ( case acc of
+            a : b : c : rest' -> c : b : a : rest'
+            _ -> error "Rot: stack needs a minimum of three values"
         )
     aux _ acc = acc
 
