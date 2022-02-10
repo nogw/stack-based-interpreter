@@ -52,17 +52,24 @@ evaluate stack = aux stack []
     aux (Push x : rest) acc = aux rest (x : acc)
     aux (Op x : rest) acc = aux rest (evaluateOp x acc)
     aux (Dup : rest) acc =
-      aux 
-        rest 
-        ( case acc of 
-            a : rest -> a : a : rest 
+      aux
+        rest
+        ( case acc of
+            a : rest' -> a : a : rest'
             [] -> error (errorEmptyStack "Dup")
         )
     aux (Swap : rest) acc =
       aux
         rest
         ( case acc of
-            a : b : rest -> b : a : rest
+            a : b : rest' -> b : a : rest'
+            _ -> error (errorMsgSmallStack "Swap")
+        )
+    aux (Drop : rest) acc =
+      aux
+        rest
+        ( case acc of
+            _ : rest' -> rest'
             _ -> error (errorMsgSmallStack "Swap")
         )
     aux _ acc = acc
