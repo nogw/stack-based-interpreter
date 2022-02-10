@@ -37,13 +37,13 @@ evaluateOp = \case
     a : b : rest -> a + b : rest
     _ -> error (errorMsgSmallStack "Add")
   Minus -> \case
-    a : b : rest -> a + b : rest
+    a : b : rest -> a - b : rest
     _ -> error (errorMsgSmallStack "Minus")
   Multiply -> \case
-    a : b : rest -> a + b : rest
+    a : b : rest -> a * b : rest
     _ -> error (errorMsgSmallStack "Multiply")
   Divide -> \case
-    a : b : rest -> a + b : rest
+    a : b : rest -> a / b : rest
     _ -> error (errorMsgSmallStack "Divide")
 
 evaluate :: [StackInstructs] -> Stack
