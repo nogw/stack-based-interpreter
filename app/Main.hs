@@ -12,16 +12,17 @@ type StackValue = Double
 type Stack = [StackValue]
 
 data StackInstructs
-  = Dup StackValue
+  = Push StackValue
   | Op Operation
-  | Drop
+  | Dup
   | Swap
+  | Drop
   | Over
   | Rot
   deriving (Show)
 
 stackTest :: [StackInstructs]
-stackTest = [Dup 1, Dup 2, Dup 2, Op Add, Op Minus]
+stackTest = [Push 1, Push 2, Push 2, Op Add, Op Minus]
 
 -- in this case I could do case pattern inside the evaluation function,
 -- but I preferred to do it here because I wanted error messages with operation type
@@ -45,7 +46,7 @@ evaluateOp = \case
 evaluate :: [StackInstructs] -> Stack
 evaluate stack = aux stack []
   where
-    aux (Dup x : rest) acc = aux rest (x : acc)
+    aux (Push x : rest) acc = aux rest (x : acc)
     aux (Op x : rest) acc = aux rest (evaluateOp x acc)
     aux (Swap : rest) acc =
       aux
