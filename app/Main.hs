@@ -5,6 +5,9 @@ module Main where
 errorMsgSmallStack :: String -> String
 errorMsgSmallStack msg = msg ++ ": stack needs a minimum of two values"
 
+errorEmptyStack :: String -> String
+errorEmptyStack msg = msg ++ ": stack needs to have at least one item to perform this operation"
+
 data Operation = Add | Minus | Divide | Multiply deriving (Show)
 
 type StackValue = Double
@@ -48,6 +51,13 @@ evaluate stack = aux stack []
   where
     aux (Push x : rest) acc = aux rest (x : acc)
     aux (Op x : rest) acc = aux rest (evaluateOp x acc)
+    aux (Dup : rest) acc =
+      aux 
+        rest 
+        ( case acc of 
+            a : rest -> a : a : rest 
+            [] -> error (errorEmptyStack "Dup")
+        )
     aux (Swap : rest) acc =
       aux
         rest
