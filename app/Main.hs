@@ -79,6 +79,13 @@ evaluate stack = aux stack []
             a : b : c : rest' -> c : b : a : rest'
             _ -> error "Rot: stack needs a minimum of three values"
         )
+    aux (Over : rest) acc =
+      aux
+        rest
+        ( case acc of
+            a : b : rest' -> a : b : a : rest'
+            _ -> error (errorMsgSmallStack "Over")
+        )
     aux _ acc = acc
 
 main :: IO ()
