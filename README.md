@@ -17,12 +17,17 @@ ghci app/main.hs
 ```
 
 ```haskell
+> evaluate [Push 1, Push 2, Over, Swap, Dup]
+[0.1, 0.1, 0.3, 0.3]
+```
+
+```haskell
 > [Push 0, Push 2, Push 3, Rot, Push 4, Rot, Swap, Drop, Swap, Rot, Push 1]
-[1.0,2.0,3.0,4.0]
+[1.0, 2.0, 3.0, 4.0]
 ```
 
 ```haskell
 > evaluate [Push 2, Push 4, Op Minus, Push 6, Swap, Push 8, Op Minus]
-[1.0,1.0]
+[1.0, 1.0]
 ```
 
