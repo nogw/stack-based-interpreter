@@ -76,7 +76,7 @@ evaluate stack = aux stack []
       aux
         rest
         ( case acc of
-            a : b : c : rest' -> c : b : a : rest'
+            a : b : c : rest' -> b : c : a : rest'
             _ -> error "Rot: stack needs a minimum of three values"
         )
     aux (Over : rest) acc =

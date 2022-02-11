@@ -17,7 +17,7 @@ ghci app/main.hs
 ```
 
 ```haskell
-> [Push 4, Push 1, Push 2, Push 3, Rot]
+> [Push 0, Push 2, Push 3, Rot, Push 4, Rot, Swap, Drop, Swap, Rot, Push 1]
 [1.0,2.0,3.0,4.0]
 ```
 
