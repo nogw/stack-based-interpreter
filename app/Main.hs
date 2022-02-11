@@ -43,7 +43,9 @@ evaluateOp = \case
     a : b : rest -> a * b : rest
     _ -> error (errorMsgSmallStack "Multiply")
   Divide -> \case
-    a : b : rest -> a / b : rest
+    a : b : rest ->
+      if b == 0 then error "Divide: divide by zero"
+      else a / b : rest
     _ -> error (errorMsgSmallStack "Divide")
 
 evaluate :: [StackInstructs] -> Stack
